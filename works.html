@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">    
+<style>
+    
+/* RESET */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BASE */
+body {
+  background: black;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────────
+   HEADER
+───────────────────────────────────────── */
+
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  padding:18px 40px;
+  display:flex;
+  align-items:center;
+}
+
+.logo{
+  font-size:.8rem;
+  font-weight:700;
+}
+
+.main-nav{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:42px;
+}
+
+ .nav-link{
+
+  position:relative;
+
+  text-decoration:none;
+  color:#8d8d8d;
+
+  font-size:.72rem;
+  font-weight:500;
+
+  text-transform:uppercase;
+  letter-spacing:3px;
+
+  transition:color .3s ease;
+}
+
+.nav-link:hover{
+  color:#fff;
+}
+
+.nav-link::after{
+
+  content:"";
+
+  position:absolute;
+  left:0;
+  bottom:-8px;
+
+  width:100%;
+  height:1px;
+
+  background:#fff;
+
+  transform:scaleX(0);
+  transform-origin:center;
+
+  transition:transform .35s ease;
+}
+
+.nav-link:hover::after{
+  transform:scaleX(1);
+}
+
+.nav-link.active{
+  color:#fff;
+}
+
+.nav-link.active::after{
+  transform:scaleX(1);
+}   
+/* ─────────────────────────────────────────
+   bottone fantasma
+───────────────────────────────────────── */
+    .back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background: transparent;
+
+  color: #888;
+  text-decoration: none;
+
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+
+  transition:
+    color .35s ease,
+    border-color .35s ease,
+    box-shadow .35s ease;
+}
+
+
+/* ─────────────────────────────────────────
+   FILTER BAR
+───────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  padding: 120px 60px 0;
+  flex-wrap: wrap;
+      
+}
+
+.filter-btn {
+  background: transparent;
+  border: none;
+  color: #4a4a4a;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 10px 22px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* separatore verticale tra i bottoni */
+.filter-btn + .filter-btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 12px;
+  width: 1px;
+  background: #2a2a2a;
+}
+
+.filter-btn:hover {
+  color: #888;
+}
+
+.filter-btn.active {
+  color: white;
+}
+
+/* underline animato per il bottone attivo */
+.filter-btn::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: calc(100% - 44px);
+  height: 1px;
+  background: white;
+  transition: transform 0.3s ease;
+  transform-origin: center;
+}
+
+.filter-btn.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+
+/* ─────────────────────────────────────────
+   WORK SECTION — con transizione hide/show
+───────────────────────────────────────── */
+/* .work-section — già presente, aggiungi overflow: hidden */
+.work-section {
+  max-width: 1600px;
+  margin: 120px auto;
+  padding: 0 80px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 100px;
+  overflow: hidden; /* ← NUOVO: blocca lo sforamento dell'immagine scalata */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* .image-box — sostituisci */
+.image-box {
+  width: clamp(360px, 40vw, 620px); /* ← era 620px fisso */
+  flex-shrink: 0;
+  overflow: hidden;
+  transform: translateX(-60px); /* ← era -100px, ridotto */
+}
+
+.image-box img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.image-box:hover img {
+  transform: scale(1.06);
+}
+
+/* TEXT */
+.content-box{
+  max-width:540px;
+  width:100%;
+
+  min-height:620px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+
+  gap:18px;
+}
+
+/* TYPOGRAPHY */
+.work-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -1px;
+}
+
+.work-subtitle {
+  font-size: 0.75rem;
+  color: #8c8c8c;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: -4px;
+}
+
+.work-description {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #cfcfcf;
+  max-width: 60ch;
+}
+
+/* DETAILS DROPDOWN */
+.work-details {
+  width: 100%;
+  margin-top: 8px;
+  border-top: 1px solid #2a2a2a;
+  border-bottom: 1px solid #2a2a2a;
+  background: transparent;
+}
+
+.work-details summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 0;
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #d0d0d0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.work-details summary:hover {
+  opacity: 0.65;
+}
+
+.work-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.work-details summary::after {
+  content: "+";
+  font-size: 1rem;
+}
+
+.work-details[open] summary::after {
+  content: "−";
+}
+
+.details-content {
+  padding: 0 0 22px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #9d9d9d;
+  line-height: 1.7;
+  font-size: 0.9rem;
+}
+
+/* MORE BUTTON */
+.more-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-top: 8px;
+  padding: 12px 28px;
+  border: 1px solid #333;
+  color: white;
+  text-decoration: none;
+  font-size: 0.72rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  background: transparent;
+  transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+.more-button:hover {
+  background: #1a1a1a;
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* EXHIBITION LINK */
+.exhibition-link {
+  color: #cfcfcf;
+  text-underline-offset: 3px;
+}
+
+.exhibition-link:hover {
+  opacity: 0.7;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  display: none;
+  text-align: center;
+  padding: 120px 20px;
+  color: #333;
+  font-size: 0.72rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.empty-state.visible {
+  display: block;
+}
+
+/* stato nascosto — usato dal filtro JS */
+.work-section.hidden {
+  display: none;
+}
+
+/* animazione ingresso quando viene mostrato */
+.work-section.visible-enter {
+  animation: fadeInUp 0.45s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}    
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+footer {
+  width: 100%;
+  padding: 100px 20px 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #161616;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 38px;
+}
+
+.social-links a {
+  color: white;
+  font-size: 1.5rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:hover {
+  opacity: 0.55;
+  transform: translateY(-2px);
+}
+
+/* ─────────────────────────────────────────
+   DESKTOP RIDOTTO ≤ 1300px
+───────────────────────────────────────── */
+@media (max-width: 1300px) {
+  .work-section {
+    gap: 60px;
+    padding: 0 50px;
+  }
+
+  .image-box {
+    transform: translateX(-30px); /* riduce lo spostamento laterale */
+  }
+
+  .content-box {
+    max-width: 460px;
+  }
+}
+/* ─────────────────────────────────────────
+   MOBILE
+───────────────────────────────────────── */    
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+}
+
+.menu-toggle span{
+  display:block;
+  width:22px;
+  height:1px;
+  background:white;
+  margin:5px 0;
+  transition:.35s ease;
+}
+
+@media (max-width:900px){
+
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  padding:18px 22px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.logo{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  display:block;
+}
+
+.menu-toggle{
+  display:block;
+  position:absolute;
+  right:22px;
+  z-index:1002;
+}
+
+.main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+
+  transform: translateX(100%);
+  visibility: hidden;
+  opacity: 0;
+
+  transition:
+    transform .45s ease,
+    opacity   .35s ease,
+    visibility 0s linear .45s;
+
+  z-index: 999;
+}
+
+.main-nav.open {
+  transform: translateX(0);
+  visibility: visible;
+  opacity: 1;
+  transition:
+    transform .45s ease,
+    opacity   .35s ease,
+    visibility 0s linear 0s;
+}
+
+.main-nav .nav-link{
+  font-size:1rem;
+  letter-spacing:4px;
+}
+
+.menu-toggle.active span:nth-child(1){
+  transform:translateY(6px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2){
+  opacity:0;
+}
+
+.menu-toggle.active span:nth-child(3){
+  transform:translateY(-6px) rotate(-45deg);
+}
+  .filter-bar {
+    padding: 60px 22px 0;
+    gap: 0;
+  }
+
+  .filter-btn {
+    font-size: 0.62rem;
+    letter-spacing: 2px;
+    padding: 10px 14px;
+  }
+
+  .work-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 0 22px;
+    margin: 70px auto;
+  }
+
+  .image-box {
+    width: 100%;
+    max-width: 420px;
+    align-items: center;
+    transform: none;
+  }
+
+  .content-box {
+    width: 100%;
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+    min-height: unset;
+  }
+
+  .work-title {
+    font-size: 1.9rem;
+    line-height: 1.08;
+    letter-spacing: -0.8px;
+    text-align: center;
+    max-width: 100%;
+    text-wrap: balance;
+  }
+
+  .work-subtitle {
+    font-size: 0.68rem;
+    letter-spacing: 2.5px;
+    text-align: center;
+  }
+
+  .work-description {
+    width: 100%;
+    max-width: 100%;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    text-align: left;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .work-details {
+    width: 100%;
+  }
+
+  .work-details summary {
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+    font-size: 0.68rem;
+    padding: 16px 0;
+  }
+
+  .details-content {
+    font-size: 0.9rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .more-button {
+    width: 100%;
+    justify-content: center;
+    padding: 15px 18px;
+    margin-top: 10px;
+  }
+}
+
+
+/* ─────────────────────────────────────────
+   SMALL MOBILE ≤ 720px
+───────────────────────────────────────── */
+@media (max-width: 720px) {
+
+  footer {
+    padding: 80px 20px 50px;
+  }
+
+  .social-links {
+    gap: 28px;
+  }
+
+  .social-links a {
+    font-size: 1.3rem;
+  }
+
+  .work-section {
+    gap: 8px;
+    margin: 60px auto;
+  }
+
+  .work-title {
+    font-size: 1.5rem;
+  }
+
+  .work-description {
+    font-size: 0.92rem;
+    line-height: 1.85;
+  }
+
+  .details-content {
+    font-size: 0.88rem;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ─── HEADER  ─── -->
+<header id="site-header">
+
+  <div class="logo">
+    ENRICO CESARIN
+  </div>
+
+  <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <nav class="main-nav" id="mobile-nav">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="works.html" class="nav-link active">Works</a>
+    <a href="about.html" class="nav-link">About</a>
+  </nav>
+
+</header>
+<!-- ─── FILTER BAR ─── -->
+<nav class="filter-bar" aria-label="Filter by category">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="installation">Installation</button>
+  <button class="filter-btn" data-filter="composition">Composition</button>
+  <button class="filter-btn" data-filter="video">Video</button>
+  <button class="filter-btn" data-filter="live set">Live Set</button>
+</nav>
+
+<!-- empty state — visibile solo quando nessun progetto corrisponde -->
+<p class="empty-state" id="empty-state">No works in this category yet.</p>
+
+
+<!-- ─── PROGETTO 5 ─── -->
+<section class="work-section" data-category="installation">
+
+  <a href="projects/materialmorphosis.html"
+     
+     class="image-link">
+    <div class="image-box">
+      <img src="assets/img/materialmorphosis_sq.png"
+           alt="Materialmorphosis 2.0">
+    </div>
+  </a>
+
+  <div class="content-box">
+
+    <h2 class="work-title">MATERIALMORPHOSIS 2.0</h2>
+    <p class="work-subtitle">INSTALLATION · 2025</p>
+
+ 
+    <a href="projects/materialmorphosis.html" class="more-button"
+       class="more-button">VIEW PROJECT →</a>
+
+  </div>
+</section>
+
+
+<!-- ─── PROGETTO 4 ─── -->
+<section class="work-section" data-category="composition">
+
+  <a href="projects/alchemicsoul.html"
+     
+     class="image-link">
+    <div class="image-box">
+      <img src="assets/img/alchemicsoul_sq.png"
+           alt="Alchemic Soul">
+    </div>
+  </a>
+
+  <div class="content-box">
+
+    <h2 class="work-title">ALCHEMIC SOUL</h2>
+    <p class="work-subtitle">COMPOSITION · 2025</p>
+
+    <a href="projects/alchemicsoul.html" class="more-button"
+       class="more-button">VIEW PROJECT →</a>
+
+  </div>
+</section>
+
+<!-- ─── PROGETTO 3 ─── -->
+<section class="work-section" data-category="composition">
+
+  <a href="projects/bioacustic.html"
+     target="_blank"
+     class="image-link">
+    <div class="image-box">
+      <img src="assets/img/bioacustic_sq.png"
+           alt="Bio Acoustic Ritual">
+    </div>
+  </a>
+
+  <div class="content-box">
+
+    <h2 class="work-title">Bio_acoustic_ritual24</h2>
+    <p class="work-subtitle">COMPOSITION · 2025</p>
+
+    <a href="projects/bioacustic.html" class="more-button"
+       class="more-button">VIEW PROJECT →</a>
+
+  </div>
+</section>    
+
+
+<!-- ─── PROGETTO 2 ─── -->
+<section class="work-section" data-category="video">
+
+  <a href="projects/lovefailureambi.html"
+     target="_blank"
+     class="image-link">
+    <div class="image-box">
+      <img src="assets/img/lovefailureambi_sq.png"
+           alt="Love failure ambivalence">
+    </div>
+  </a>
+
+  <div class="content-box">
+
+    <h2 class="work-title">LOVE FAILURE AMBIVALENCE</h2>
+    <p class="work-subtitle">VIDEO · 2024</p>
+
+    <a href="projects/lovefailureambi.html" class="more-button"
+       class="more-button">VIEW PROJECT →</a>
+
+  </div>
+</section>
+
+
+<!-- ─── PROGETTO 1 ─── -->
+<section class="work-section" data-category="live set">
+
+  <a href="projects/safespace.html"
+     target="_blank"
+     class="image-link">
+    <div class="image-box">
+      <img src="assets/img/lapis_sq.png"
+           alt="Lapis">
+    </div>
+  </a>
+
+  <div class="content-box">
+
+    <h2 class="work-title">JACKTULO + 22ROCKY "SAFE SPACE"</h2>
+    <p class="work-subtitle">LIVE SET · 2023</p>
+
+    <a href="projects/safespace.html" class="more-button"
+       target="_blank"
+       class="more-button">VIEW PROJECT →</a>
+
+  </div>
+</section>
+
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="social-links">
+
+    <a href="https://www.instagram.com/jacktulo/"
+       target="_blank"
+       aria-label="Instagram">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+
+    <a href="https://on.soundcloud.com/Hu8hjfZL8MQTzkFNN5"
+       target="_blank"
+       aria-label="SoundCloud">
+      <i class="fa-brands fa-soundcloud"></i>
+    </a>
+
+    <a href="https://open.spotify.com/playlist/4Y6WbuDnoUpmHGoTTx4UJ4?si=f1914e9fd5a0493e"
+       target="_blank"
+       aria-label="Spotify">
+      <i class="fa-brands fa-spotify"></i>
+    </a>
+
+    <a href="mailto:enri.cesarin4@gmail.com"
+       aria-label="Email">
+      <i class="fa-regular fa-envelope"></i>
+    </a>
+
+  </div>
+</footer>
+
+
+<script>
+   // ── hamburgher ──   
+const menuToggle = document.getElementById('menu-toggle');
+const mobileNav  = document.getElementById('mobile-nav');
+
+menuToggle.addEventListener('click', () => {
+  const isOpen = mobileNav.classList.toggle('open');
+  menuToggle.classList.toggle('active', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+
+mobileNav.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileNav.classList.remove('open');
+    menuToggle.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+});
+  // ── Header sticky ──
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+
+
+  // ── Filter logic ──
+  const filterBtns  = document.querySelectorAll('.filter-btn');
+  const sections    = document.querySelectorAll('.work-section');
+  const emptyState  = document.getElementById('empty-state');
+
+  function applyFilter(filter) {
+    let visibleCount = 0;
+
+    sections.forEach(section => {
+      const cat = section.dataset.category.toLowerCase();
+      const match = filter === 'all' || cat === filter;
+
+      if (match) {
+        section.classList.remove('hidden');
+        // forza reflow per riattivare l'animazione
+        void section.offsetWidth;
+        section.classList.add('visible-enter');
+        section.addEventListener('animationend', () => {
+          section.classList.remove('visible-enter');
+        }, { once: true });
+        visibleCount++;
+      } else {
+        section.classList.add('hidden');
+        section.classList.remove('visible-enter');
+      }
+    });
+
+    emptyState.classList.toggle('visible', visibleCount === 0);
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // aggiorna active
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      applyFilter(btn.dataset.filter.toLowerCase());
+    });
+  });
+</script>
+
+</body>
+</html>
