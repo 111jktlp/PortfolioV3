@@ -614,7 +614,10 @@ footer{
 
   header{
     padding:18px 22px;
-    justify-content:center;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
   }
 
   .logo{
@@ -624,7 +627,23 @@ footer{
   .main-nav{
     position:static;
     transform:none;
-    gap:28px;
+
+    display:flex;
+    gap:18px;
+
+    flex-wrap:nowrap;
+  }
+
+  .project-heading-side{
+    position:static;
+    transform:none;
+    padding-top:0;
+  }
+
+  .back-link{
+    padding:8px 12px;
+    font-size:.6rem;
+    letter-spacing:1.5px;
   }
   .project-intro{
     padding:0 22px;
