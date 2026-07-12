@@ -8,7 +8,11 @@
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    
 <style>
 
 /* ─────────────────────────────
@@ -33,89 +37,81 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-/* ─────────────────────────────
+/* ─────────────────────────────────────────
    HEADER
-───────────────────────────── */
+───────────────────────────────────────── */
 
 header{
+    position:sticky;      /* oppure sticky se preferisci */
+    top:0;
+    left:0;
+    width:100%;
 
-  position:fixed;
-  top:0;
-  left:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-  width:100%;
-  z-index:100;
+    padding:18px 40px;
 
-  padding:18px 40px;
-
-  display:flex;
-  align-items:center;
+    background:rgba(0,0,0,.9); /* oppure transparent */
+    backdrop-filter:blur(8px); /* opzionale */
+    font-family: monospace;
+    z-index:9999;
 }
-
 .logo{
-
   font-size:.8rem;
   font-weight:700;
   letter-spacing:2.5px;
   text-transform:uppercase;
-
   opacity:.9;
+  z-index:2;
 }
 
 .main-nav{
-
-  position:absolute;
-  left:50%;
-
-  transform:translateX(-50%);
-
-  display:flex;
-  gap:42px;
+    display:flex;
+    gap:42px;
+    margin-left:auto;
 }
 
 .nav-link{
-
   position:relative;
-
   text-decoration:none;
   color:#8d8d8d;
-
   font-size:.72rem;
   font-weight:500;
-
   text-transform:uppercase;
   letter-spacing:3px;
-
-  transition:.3s;
+  transition:color .3s ease;
 }
 
-.nav-link:hover,
-.nav-link.active{
+.nav-link:hover{
   color:#fff;
 }
 
 .nav-link::after{
-
   content:"";
-
   position:absolute;
   left:0;
   bottom:-8px;
-
   width:100%;
   height:1px;
-
   background:#fff;
-
   transform:scaleX(0);
-  transition:.35s;
+  transform-origin:center;
+  transition:transform .35s ease;
 }
 
-.nav-link:hover::after,
-.nav-link.active::after{
+.nav-link:hover::after{
   transform:scaleX(1);
 }
 
+.nav-link.active{
+  color:#fff;
+}
+
+.nav-link.active::after{
+  transform:scaleX(1);
+}
 /* ─────────────────────────────
    ABOUT HERO
 ───────────────────────────── */
@@ -161,6 +157,8 @@ header{
   text-transform:uppercase;
 
   margin-bottom:40px;
+  font-family: 'Quicksand', sans-serif;  
+     
 }
 
 .about-content p{
@@ -171,6 +169,9 @@ header{
   color:#bfbfbf;
 
   margin-bottom:28px;
+  
+        font-family: "MS PGothic", "Osaka", Arial, sans-serif;
+    font-size: clamp(.85rem, .9vw, 1rem);
 }
 
 .about-content p:last-child{
@@ -196,6 +197,24 @@ header{
   opacity:.92;
 }
 
+    
+.menu-toggle{
+    display:none;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:4px;
+}
+
+.menu-toggle span{
+    display:block;
+    width:22px;
+    height:1px;
+    background:#fff;
+    margin:5px 0;
+    transition:.35s;
+}    
+    
 /* ─────────────────────────────
    MOBILE
 ───────────────────────────── */
@@ -203,19 +222,87 @@ header{
 @media(max-width:950px){
 
   header{
-    padding:18px 22px;
-    justify-content:center;
-  }
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  padding:18px 22px;
 
-  .logo{
-    display:none;
-  }
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
 
-  .main-nav{
-    position:static;
-    transform:none;
-  }
+.logo{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  display:block;
+}
 
+.menu-toggle{
+  display:block;
+  position:absolute;
+  right:22px;
+  z-index:1002;
+}
+
+.main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+
+  transform: translateX(100%);
+  visibility: hidden;
+  opacity: 0;
+
+  transition:
+    transform .45s ease,
+    opacity   .35s ease,
+    visibility 0s linear .45s;
+
+  z-index: 999;
+}
+
+.main-nav.open {
+  transform: translateX(0);
+  visibility: visible;
+  opacity: 1;
+  transition:
+    transform .45s ease,
+    opacity   .35s ease,
+    visibility 0s linear 0s;
+}
+
+.main-nav .nav-link{
+  font-size:1rem;
+  letter-spacing:4px;
+}
+
+.menu-toggle.active span:nth-child(1){
+  transform:translateY(6px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2){
+  opacity:0;
+}
+
+.menu-toggle.active span:nth-child(3){
+  transform:translateY(-6px) rotate(-45deg);
+}
+  .filter-bar {
+    padding: 60px 22px 0;
+    gap: 0;
+  }
   .about-section{
     padding:120px 28px 60px;
   }
@@ -242,19 +329,55 @@ header{
     font-size:1rem;
   }
 }
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
 
+footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  padding:28px 20px;
+  display:flex;
+  justify-content:center;
+}
+
+.social-links{
+  display:flex;
+  gap:34px;
+}
+
+.social-links a{
+  color:white;
+  font-size:1.4rem;
+  transition:
+    opacity .3s ease,
+    transform .3s ease;
+}
+
+.social-links a:hover{
+  opacity:.55;
+  transform:translateY(-2px);
+}
+    
+    
 </style>
 </head>
 
 <body>
 
-<header>
+<header id="site-header">
 
   <div class="logo">
     ENRICO CESARIN
   </div>
-
-  <nav class="main-nav">
+<button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+  <nav class="main-nav" id="mobile-nav">
 
     <a href="index.html" class="nav-link">
       Home
@@ -280,10 +403,11 @@ header{
 
       <h1 class="about-title">
         About
-      </h1>
-
+      </h1> 
+        
       <p>
-        I'm Enrico Cesarin, a multidisciplinary artist
+        
+        I'm Enrico Cesarin (online AKA jacktulo), a multidisciplinary artist
         working across music, visual design and digital media.
       </p>
 
@@ -305,17 +429,66 @@ header{
 
     </div>
 
-    <div class="about-image">
+  <!--  <div class="about-image">
 
       <img
       src="assets/img/hero1.png"
       alt="Enrico Cesarin">
 
-    </div>
+    </div> -->
 
   </div>
 
 </section>
 
 </body>
+
+    
+    
+<!-- FOOTER -->
+<footer>
+  <div class="social-links">
+    <a href="https://www.instagram.com/jacktulo/" target="_blank" aria-label="Instagram">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+    <a href="https://on.soundcloud.com/Hu8hjfZL8MQTzkFNN5" target="_blank" aria-label="SoundCloud">
+      <i class="fa-brands fa-soundcloud"></i>
+    </a>
+    <a href="https://open.spotify.com/playlist/4Y6WbuDnoUpmHGoTTx4UJ4?si=ac823859338f4cfa" target="_blank" aria-label="Spotify">
+      <i class="fa-brands fa-spotify"></i>
+    </a>
+    <a href="mailto:enri.cesarin4@gmail.com" aria-label="Email">
+      <i class="fa-regular fa-envelope"></i>
+    </a>
+  </div>
+</footer>  
+    
+    
+    <script>
+   // ── hamburgher ──   
+const menuToggle = document.getElementById('menu-toggle');
+const mobileNav  = document.getElementById('mobile-nav');
+
+menuToggle.addEventListener('click', () => {
+  const isOpen = mobileNav.classList.toggle('open');
+  menuToggle.classList.toggle('active', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+
+mobileNav.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileNav.classList.remove('open');
+    menuToggle.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+});
+  // ── Header sticky ──
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
+</script>
+    
+    
 </html>
+
