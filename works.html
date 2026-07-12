@@ -30,41 +30,45 @@ html, body {
 ───────────────────────────────────────── */
 
 header{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  padding:18px 40px;
-  display:flex;
-  align-items:center;
-}
+    position:sticky;      /* oppure sticky se preferisci */
+    top:0;
+    left:0;
+    width:100%;
 
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 40px;
+
+    background:rgba(0,0,0,.9); /* oppure transparent */
+    backdrop-filter:blur(8px); /* opzionale */
+    font-family: monospace;
+    z-index:9999;
+}
 .logo{
   font-size:.8rem;
   font-weight:700;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  opacity:.9;
+  z-index:2;
 }
 
 .main-nav{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:42px;
+    display:flex;
+    gap:42px;
+    margin-left:auto;
 }
 
- .nav-link{
-
+.nav-link{
   position:relative;
-
   text-decoration:none;
   color:#8d8d8d;
-
   font-size:.72rem;
   font-weight:500;
-
   text-transform:uppercase;
   letter-spacing:3px;
-
   transition:color .3s ease;
 }
 
@@ -73,21 +77,15 @@ header{
 }
 
 .nav-link::after{
-
   content:"";
-
   position:absolute;
   left:0;
   bottom:-8px;
-
   width:100%;
   height:1px;
-
   background:#fff;
-
   transform:scaleX(0);
   transform-origin:center;
-
   transition:transform .35s ease;
 }
 
@@ -101,7 +99,7 @@ header{
 
 .nav-link.active::after{
   transform:scaleX(1);
-}   
+}
 /* ─────────────────────────────────────────
    bottone fantasma
 ───────────────────────────────────────── */
@@ -834,7 +832,7 @@ header{
       <i class="fa-brands fa-soundcloud"></i>
     </a>
 
-    <a href="https://open.spotify.com/playlist/4Y6WbuDnoUpmHGoTTx4UJ4?si=f1914e9fd5a0493e"
+    <a href="https://open.spotify.com/playlist/4Y6WbuDnoUpmHGoTTx4UJ4?si=ac823859338f4cfa"
        target="_blank"
        aria-label="Spotify">
       <i class="fa-brands fa-spotify"></i>
