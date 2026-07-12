@@ -23,9 +23,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   box-sizing:border-box;
 }
 
-html,
-body{
-  overflow-x:hidden;
+html, body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
 }
 
 body{
@@ -33,27 +35,35 @@ body{
   color:#fff;
   font-family:Arial, Helvetica, sans-serif;
   -webkit-font-smoothing:antialiased;
+   cursor: url(assets/img/chromehearts3.png) 32 32, auto; 
+  
 }
-
+    
+a,
+button{
+    cursor: url(assets/img/chromehearts3.png) 32 32, pointer;
+}
 /* ─────────────────────────────────────────
    HEADER
 ───────────────────────────────────────── */
 
 header{
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:100;
+    position:sticky;      /* oppure sticky se preferisci */
+    top:0;
+    left:0;
+    width:100%;
 
-  width:100%;
-  padding:18px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-  display:flex;
-  align-items:center;
+    padding:18px 40px;
 
-  background:transparent;
+    background:rgba(0,0,0,.9); /* oppure transparent */
+    backdrop-filter:blur(8px); /* opzionale */
+    font-family: monospace;
+    z-index:9999;
 }
-
 .logo{
   font-size:.8rem;
   font-weight:700;
@@ -64,11 +74,9 @@ header{
 }
 
 .main-nav{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:42px;
+    display:flex;
+    gap:42px;
+    margin-left:auto;
 }
 
 .nav-link{
@@ -116,62 +124,151 @@ header{
 ───────────────────────────────────────── */
 
 .hero{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:120px 60px 80px;
+    position:relative;
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    perspective:1800px;
+    overflow:hidden;
+}
+.carousel{
+
+    position:relative;
+
+    width:500px;
+    height:500px;
+    transform-style:preserve-3d;
+   
+    transform:rotateX(-10deg);
+    
+    transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.hero-grid{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:140px;
+.card{
+
+    position:absolute;
+
+    top:45%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    text-decoration:none;
+    color:white;
+
+    transform-style:preserve-3d;
+    
+    transition:
+    transform .8s cubic-bezier(.22,.61,.36,1),
+    opacity .5s;
+} 
+
+.card img{
+
+    width:100px;
+
+    transition:.6s;
+} 
+
+.card span{
+
+    margin-top:25px;
+
+    letter-spacing:5px;
+
+    font-size:.75rem;
+} 
+    
+.front{
+    transform:
+        translate(-50%, -50%)
+        rotateY(0deg)
+        translateZ(300px);
+    /* niente z-index qui */
 }
 
-.portal-link{
-  text-decoration:none;
-  color:white;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:22px;
+.front:hover img{
+    transform:scale(1.05);
+    filter:brightness(1.15);
+} 
+    
+
+.left{
+    transform:
+        translate(-50%, -50%)
+        rotateY(-120deg)
+        translateZ(300px);
+    /* niente z-index qui */
+}
+.left:hover img{
+    transform:scale(1.05);
+    filter:brightness(1.15);
+}  
+    
+    
+.right{
+    transform:
+        translate(-50%, -50%)
+        rotateY(120deg)
+        translateZ(300px);
+    /* niente z-index qui */
+}
+.right:hover img{
+    transform:scale(1.05);
+    filter:brightness(1.15);
+}    
+    
+.nav-arrows{
+    position: absolute;      /* o fixed, a seconda del tuo layout */
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 285px;         /* distanza dai bordi */
+    box-sizing: border-box;
+
+    pointer-events: none;    /* opzionale */
 }
 
-.portal-link img{
-  width:clamp(240px, 24vw, 360px);
-  aspect-ratio:1 / 1;
-  object-fit:contain;
-  display:block;
-  opacity:.82;
-  transition:
-    transform .55s ease,
-    opacity .55s ease;
+.arrow{
+    pointer-events: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
-.portal-link:hover img{
-  transform:scale(1.12);
-  opacity:1;
+.arrow img{
+    width: 50px;      /* scegli la dimensione */
+    height: auto;
+    display: block;
+    transition: transform .3s ease;
+    
 }
 
-.portal-link span{
-  margin-top:24px;
-  font-size:.72rem;
-  font-weight:500;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  color:#9a9a9a;
-  transition:
-    color .35s ease,
-    letter-spacing .35s ease;
+/* Specchia la freccia sinistra */
+#left img{
+    transform: scaleX(-1);
 }
 
-.portal-link:hover span{
-  color:white;
-  letter-spacing:5px;
+/* Hover */
+.arrow:hover img{
+    transform: scale(1.4);
 }
 
+/* Mantiene anche lo specchio a sinistra */
+#left:hover img{
+    transform: scaleX(-1) scale(1.4);
+}
 /* ─────────────────────────────────────────
    FOOTER
 ───────────────────────────────────────── */
@@ -251,6 +348,13 @@ footer{
 
 @media(max-width:900px){
 
+    
+  html,
+body{
+    overflow-x:hidden;
+}  
+    
+    
   header{
     position:fixed;
     top:0;
@@ -266,7 +370,7 @@ footer{
 
   .logo{
     position:absolute;
-    left:50%;
+    left:25%;
     transform:translateX(-50%);
   }
 
@@ -327,15 +431,58 @@ footer{
     letter-spacing:4px;
   }
 
-  .hero{
-    padding:140px 22px 80px;
-  }
+  ..hero{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
+    padding-top:70px;   /* altezza header */
+    padding-bottom:40px;
+}
   .hero-grid{
     flex-direction:column;
     gap:80px;
   }
-
+    
+    
+.carousel{
+    width:260px;
+    height:260px;
+}
+    
+.card img{
+    width:150px;
+}
+    
+    
+.front{
+    transform:
+        translate(-50%, -50%)
+        rotateY(0deg)
+        translateZ(180px);
+    /* niente z-index qui */
+}
+.left{
+    transform:
+        translate(-50%, -50%)
+        rotateY(-120deg)
+        translateZ(180px);
+    /* niente z-index qui */
+   } 
+.right{
+    transform:
+        translate(-50%, -50%)
+        rotateY(120deg)
+        translateZ(180px);
+    /* niente z-index qui */
+    
+   } 
+    
+.nav-arrows{
+    display:none;
+}    
+     
   .portal-link img{
     width:min(72vw, 300px);
   }
@@ -345,12 +492,54 @@ footer{
     padding:60px 20px 40px;
   }
 }
+@media (max-width: 900px) and (orientation: landscape){
 
+    .hero{
+        min-height:100vh;
+        padding-top:60px;
+        padding-bottom:20px;
+    }
+
+    .carousel{
+        width:220px;
+        height:190px;
+    }
+
+    .card img{
+        width:100px;
+    }
+
+    .front{
+        transform:
+            translate(-50%, -50%)
+            rotateY(0deg)
+            translateZ(100px);
+    }
+
+    .left{
+        transform:
+            translate(-50%, -50%)
+            rotateY(-120deg)
+            translateZ(100px);
+    }
+
+    .right{
+        transform:
+            translate(-50%, -50%)
+            rotateY(120deg)
+            translateZ(100px);
+    }
+
+}
+    
 </style>
 </head>
 
 <body>
-
+ <div clas="custom-cursor site-wide">
+    <div class="pointer"></div>
+    </div>
+</body>    
 <!-- HEADER -->
 <header>
   <div class="logo">ENRICO CESARIN</div>
@@ -370,21 +559,38 @@ footer{
 
 <!-- HERO -->
 <main class="hero">
-  <div class="hero-grid">
+  <div class="carousel">
 
-    <a href="works.html" class="portal-link">
-      <img src="assets/img/ChatGPT%20Image%206%20mag%202026,%2015_50_59.png" alt="Works">
+    <a href="works.html" class="card front" id="works-card">
+      <img src="assets/img/spada2.png" alt="Works">
       <span>Works</span>
     </a>
 
-    <a href="about.html" class="portal-link">
-      <img src="assets/img/ChatGPT%20Image%206%20mag%202026,%2015_50_59.png" alt="About">
+    <a href="about.html" class="card left" id="about-card">
+      <img src="assets/img/spada2.png" alt="About">
       <span>About</span>
     </a>
 
+      <a href="about.html" class="card right" id="new-card">
+      <img src="assets/img/spada2.png" alt="About">
+      <span>New</span>
+    </a>
   </div>
+    
+   <div class="nav-arrows">
+
+  <button id="left" class="arrow">
+    <img src="assets/img/arrow2.png" alt="Precedente">
+  </button>
+
+  <button id="right" class="arrow">
+    <img src="assets/img/arrow2.png" alt="Successivo">
+  </button>
+
+</div>
 </main>
 
+   
 <!-- FOOTER -->
 <footer>
   <div class="social-links">
@@ -394,7 +600,7 @@ footer{
     <a href="https://on.soundcloud.com/Hu8hjfZL8MQTzkFNN5" target="_blank" aria-label="SoundCloud">
       <i class="fa-brands fa-soundcloud"></i>
     </a>
-    <a href="https://open.spotify.com/" target="_blank" aria-label="Spotify">
+    <a href="https://open.spotify.com/playlist/4Y6WbuDnoUpmHGoTTx4UJ4?si=ac823859338f4cfa" target="_blank" aria-label="Spotify">
       <i class="fa-brands fa-spotify"></i>
     </a>
     <a href="mailto:enri.cesarin4@gmail.com" aria-label="Email">
@@ -423,7 +629,42 @@ footer{
       document.body.style.overflow = '';
     });
   });
+    
+ // ── Hero animation ──   
+    
+let angle = 0;
+const carousel = document.querySelector(".carousel");
 
+function rotate(dir){
+  angle += dir * 120;
+  carousel.style.transform = `rotateX(-10deg) rotateY(${angle}deg)`;
+}
+
+document.getElementById("left").addEventListener("click", () => {
+  rotate(-1);
+});
+
+document.getElementById("right").addEventListener("click", () => {
+  rotate(1);
+});
+    
+document.querySelectorAll(".card").forEach(card => {
+
+  card.addEventListener("click", (e) => {
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+
+    const center = x > rect.width * 0.35 && x < rect.width * 0.65;
+
+    if (center) {
+      window.location.href = card.href;
+    }
+
+  });
+
+});    
+    
   // ── Glitch ──
   function spawnGlitch(x, y) {
     if (Math.random() > 0.25) return;
@@ -449,7 +690,40 @@ footer{
 
   document.addEventListener("mousemove", e => spawnGlitch(e.clientX, e.clientY));
   document.addEventListener("touchmove", e => spawnGlitch(e.touches[0].clientX, e.touches[0].clientY), {passive:true});
-</script>
+
+  // ──Swape ──  
+    
+  let startX = 0;
+
+carousel.addEventListener("touchstart",(e)=>{
+    startX = e.touches[0].clientX;
+});
+
+carousel.addEventListener("touchend",(e)=>{
+
+    let endX = e.changedTouches[0].clientX;
+
+    if(endX-startX > 40){
+        rotate(-1);
+    }
+
+    if(startX-endX > 40){
+        rotate(1);
+    }
+
+});  
+    
+    
+    
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
 
 </body>
 </html>
